@@ -6,10 +6,7 @@ from pathlib import Path
 import subprocess
 import urllib.request
 
-from tcd_browser import TCDBrowser
-from preferences import preferences
-
-parser = argparse.ArgumentParser(description="Install Ghidra dark theme")
+parser = argparse.ArgumentParser(description="Install Ghidra light theme")
 parser.add_argument("--path", dest="install_path", type=str, default=None,
                     help="The installation path for Ghidra")
 args = parser.parse_args()
@@ -87,7 +84,7 @@ with open(launch_properties_path, "r") as fp:
 # Set FlatLaf as the system L&f
 if not flatlaf_set:
     with open(launch_properties_path, "a") as fp:
-        fp.write("\nVMARGS=-Dswing.systemlaf=com.formdev.flatlaf.FlatDarkLaf")
+        fp.write("\nVMARGS=-Dswing.systemlaf=com.formdev.flatlaf.FlatLightLaf")
 
 # _PUBLIC was appended to the name after 9.0.4
 # The "-" after .ghidra was changed to "_" after 9.0.4
@@ -115,9 +112,3 @@ with open(preferences_path, "r") as fp:
 if not using_system:
     with open(preferences_path, "a") as fp:
         fp.write("LastLookAndFeel=System\n")
-
-# Backup the current tcd
-shutil.copy(code_browser_path, code_browser_bak_path)
-
-browser = TCDBrowser(code_browser_path)
-browser.update(preferences)
